@@ -58,24 +58,22 @@ export function renderAbout() {
         </div>
 
         <!-- Founder / trust -->
-        <div class="founder reveal">
-          <div class="founder-portrait">
-            <img src="${import.meta.env.BASE_URL}founder.jpg" alt="Founder of Phaung's Beauty Lab"
-                 onerror="this.onerror=null;this.src='${import.meta.env.BASE_URL}logo.jpg';this.classList.add('is-fallback')" />
-            <span class="founder-ring"></span>
+        <div class="founder-feature reveal">
+          <div class="scene-divider"><i data-lucide="heart" style="width:16px;height:16px"></i></div>
+          <div class="text-elegant" style="color:var(--gold-deep)">With love</div>
+          <h2 class="heading-lg" style="margin:0.25rem 0 1.25rem">Meet the Founder</h2>
+          <div class="founder-banner">
+            <img src="${import.meta.env.BASE_URL}founder.jpg"
+                 alt="Phaung's Beauty Lab — You are beautiful, inside and out"
+                 onerror="this.onerror=null;this.closest('.founder-banner').style.display='none'" />
           </div>
-          <div class="founder-text">
-            <div class="scene-divider" style="margin-left:0"><i data-lucide="heart" style="width:16px;height:16px"></i></div>
-            <div class="text-elegant" style="color:var(--gold-deep)">With love</div>
-            <h2 class="heading-lg" style="margin:0.25rem 0 0.75rem">Meet the Founder</h2>
-            <p class="text-muted" style="line-height:1.8">
-              Every fragrance at Phaung's Beauty Lab is hand-picked with care — chosen to make
-              you feel elegant, confident, and unmistakably yourself. What began as a love for
-              beautiful scents has grown into a trusted little boutique serving fragrance lovers
-              across Myanmar.
-            </p>
-            <div class="founder-sign">— Phaung</div>
-          </div>
+          <p class="text-muted" style="max-width:640px;margin:1.5rem auto 0;line-height:1.8">
+            Every fragrance at Phaung's Beauty Lab is hand-picked with care — chosen to make
+            you feel elegant, confident, and unmistakably yourself. What began as a love for
+            beautiful scents has grown into a trusted little boutique serving fragrance lovers
+            across Myanmar.
+          </p>
+          <div class="founder-sign">— Phaung</div>
         </div>
 
         <!-- Contact -->

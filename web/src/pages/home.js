@@ -189,6 +189,23 @@ export function renderHome() {
       </div>
     </section>
 
+    <!-- BRAND ETHOS BANNER -->
+    <section class="section" style="background:var(--white)">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="scene-divider"><i data-lucide="heart" style="width:18px;height:18px"></i></div>
+          <div class="section-eyebrow">Our Promise</div>
+          <h2 class="section-title">Empowering Women Through Beauty</h2>
+        </div>
+        <div class="founder-banner reveal" style="max-width:960px">
+          <img src="${import.meta.env.BASE_URL}founder.jpg"
+               alt="Phaung's Beauty Lab — You are beautiful, inside and out"
+               loading="lazy"
+               onerror="this.closest('.founder-banner').style.display='none'" />
+        </div>
+      </div>
+    </section>
+
     <!-- CTA SECTION -->
     <section class="section reveal" style="background:linear-gradient(135deg, var(--plum) 0%, var(--plum-light) 100%);color:var(--white)">
       <div class="container text-center">
