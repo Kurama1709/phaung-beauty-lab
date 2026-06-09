@@ -107,7 +107,7 @@ export function renderNavbar() {
 
         <div class="navbar-actions">
           <div class="navbar-search">
-            ${icon('search', 16)}
+            <button class="navbar-search-btn" id="nav-search-btn" aria-label="Search" type="button">${icon('search', 16)}</button>
             <input type="text" class="input input-search" placeholder="Search perfumes..." id="nav-search" />
           </div>
           <button class="btn btn-icon btn-ghost cart-btn" id="cart-toggle">
@@ -142,15 +142,18 @@ export function initNavbar() {
     }, { passive: true });
   }
 
-  // Search
+  // Search (Enter key OR clicking the magnifier button)
   const searchInput = document.getElementById('nav-search');
+  const doSearch = () => {
+    const q = (searchInput?.value || '').trim();
+    if (q) router.navigate(`/shop?search=${encodeURIComponent(q)}`);
+    else router.navigate('/shop');
+  };
   if (searchInput) {
-    searchInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && searchInput.value.trim()) {
-        router.navigate(`/shop?search=${encodeURIComponent(searchInput.value.trim())}`);
-      }
-    });
+    searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSearch(); });
   }
+  const searchBtn = document.getElementById('nav-search-btn');
+  if (searchBtn) searchBtn.addEventListener('click', doSearch);
 
   // Cart toggle
   const cartBtn = document.getElementById('cart-toggle');

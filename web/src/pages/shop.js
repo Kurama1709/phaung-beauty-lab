@@ -8,15 +8,20 @@ import { renderNavbar, initNavbar, renderProductCard, initProductCards, renderPa
 let currentFilters = { search: '', gender: '', brand: '', type: '', sort: 'name-asc', page: 1 };
 let filtersOpen = false;
 
+let skipUrlParse = false; // true for in-page re-renders (state is the source, not the URL)
+
+function rerenderShop() { skipUrlParse = true; renderShop(); skipUrlParse = false; }
+
 export function renderShop(params = {}) {
-  // Parse query params from hash
-  const hashParts = window.location.hash.split('?');
-  if (hashParts.length > 1) {
-    const urlParams = new URLSearchParams(hashParts[1]);
-    if (urlParams.get('search')) currentFilters.search = urlParams.get('search');
-    if (urlParams.get('gender')) currentFilters.gender = urlParams.get('gender');
-    if (urlParams.get('brand')) currentFilters.brand = urlParams.get('brand');
-    if (urlParams.get('type')) currentFilters.type = urlParams.get('type');
+  // On navigation, the URL query is the source of truth (resets stale filters).
+  if (!skipUrlParse) {
+    const q = window.location.hash.split('?')[1] || '';
+    const p = new URLSearchParams(q);
+    currentFilters.search = p.get('search') || '';
+    currentFilters.gender = p.get('gender') || '';
+    currentFilters.brand = p.get('brand') || '';
+    currentFilters.type = p.get('type') || '';
+    currentFilters.page = 1;
   }
 
   const brands = store.getBrands().filter(b => b.name !== 'Other');
@@ -185,7 +190,7 @@ function renderProducts() {
 
   // Reset filters
   const resetBtn = document.getElementById('reset-filters');
-  if (resetBtn) resetBtn.addEventListener('click', () => { currentFilters = { search: '', gender: '', brand: '', type: '', sort: 'name-asc', page: 1 }; renderShop(); });
+  if (resetBtn) resetBtn.addEventListener('click', () => { currentFilters = { search: '', gender: '', brand: '', type: '', sort: 'name-asc', page: 1 }; rerenderShop(); });
 }
 
 function initShopEvents() {
@@ -220,12 +225,12 @@ function initShopEvents() {
 
   // Clear individual filters
   document.querySelectorAll('[data-clear]').forEach(btn => {
-    btn.addEventListener('click', () => { currentFilters[btn.dataset.clear] = ''; currentFilters.page = 1; renderShop(); });
+    btn.addEventListener('click', () => { currentFilters[btn.dataset.clear] = ''; currentFilters.page = 1; rerenderShop(); });
   });
 
   // Clear all filters
   const clearAll = document.getElementById('clear-all-filters');
-  if (clearAll) clearAll.addEventListener('click', () => { currentFilters = { search: '', gender: '', brand: '', type: '', sort: 'name-asc', page: 1 }; renderShop(); });
+  if (clearAll) clearAll.addEventListener('click', () => { currentFilters = { search: '', gender: '', brand: '', type: '', sort: 'name-asc', page: 1 }; rerenderShop(); });
 
   // Mobile filter toggle
   const filterToggle = document.getElementById('filter-toggle');

@@ -108,6 +108,21 @@
   width: 16px; height: 16px;
   pointer-events: none;
 }
+.navbar-search-btn {
+  position: absolute;
+  left: 0.55rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: color var(--duration) var(--ease);
+}
+.navbar-search-btn:hover { color: var(--rose); }
+.navbar-search .input-search { padding-left: 2.5rem; }
 .cart-btn {
   position: relative;
 }

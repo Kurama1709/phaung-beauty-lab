@@ -23,15 +23,16 @@ class Router {
   }
 
   handleRoute() {
-    const hash = window.location.hash.slice(1) || '/';
-    const app = document.getElementById('app');
+    const fullHash = window.location.hash.slice(1) || '/';
+    // Route matching uses the PATH only — the ?query part is read by pages.
+    const path = fullHash.split('?')[0] || '/';
 
     // Find matching route (supports params like /product/:slug)
     let handler = null;
     let params = {};
 
     for (const [pattern, h] of this.routes) {
-      const match = this.matchRoute(pattern, hash);
+      const match = this.matchRoute(pattern, path);
       if (match) {
         handler = h;
         params = match;
@@ -44,7 +45,7 @@ class Router {
     }
 
     if (handler) {
-      this.currentRoute = hash;
+      this.currentRoute = fullHash;
       if (this.beforeEach) this.beforeEach(hash);
 
       // Scroll to top
@@ -83,7 +84,8 @@ class Router {
   }
 
   getCurrentPath() {
-    return window.location.hash.slice(1) || '/';
+    // Path only (without ?query) so nav active-states match correctly
+    return (window.location.hash.slice(1) || '/').split('?')[0] || '/';
   }
 }
 
