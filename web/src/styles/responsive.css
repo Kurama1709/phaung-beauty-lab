@@ -160,14 +160,15 @@
   }
 
   .product-detail-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 1.5rem;
   }
+  .product-gallery { position: static; }
   .product-actions {
     flex-direction: column;
   }
   .product-actions .btn { width: 100%; }
-  .variant-pill { flex: 1 1 30%; min-width: 0; }
+  .variant-pill { min-width: 0; }
 
   .category-grid {
     grid-template-columns: 1fr;

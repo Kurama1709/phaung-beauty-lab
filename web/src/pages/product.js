@@ -45,7 +45,7 @@ export function renderProduct(params) {
     <div class="product-detail page-enter">
       <div class="container">
         <!-- Breadcrumb -->
-        <div class="flex items-center gap-xs text-sm text-muted" style="margin:0.5rem 0 1.5rem">
+        <div class="product-crumbs flex items-center gap-xs text-sm text-muted" style="margin:0.5rem 0 1.5rem">
           <a href="#/" style="color:var(--rose)">Home</a>
           ${icon('chevron-right', 14)}
           <a href="#/shop" style="color:var(--rose)">Shop</a>

@@ -300,14 +300,10 @@
 
 /* product detail gallery: same idea, lighter zoom so the product reads.
    Source images are square — use 1:1 (not 3/4) so they aren't over-tall. */
-.product-gallery-main { overflow: hidden; position: relative; aspect-ratio: 1 / 1; max-height: 66vh; }
-.product-gallery-main img { transform: scale(1.28); transform-origin: 50% 50%; }
-.product-gallery-main::before,
-.product-gallery-main::after {
-  content: ''; position: absolute; left: 0; right: 0; height: 15%; z-index: 1; pointer-events: none;
-}
-.product-gallery-main::before { top: 0; background: linear-gradient(to bottom, var(--cream-botanic), rgba(245,240,230,0)); }
-.product-gallery-main::after { bottom: 0; background: linear-gradient(to top, var(--cream-botanic), rgba(245,240,230,0)); }
+.product-gallery, .product-info { min-width: 0; }
+.product-gallery-main { overflow: hidden; position: relative; aspect-ratio: 1 / 1; max-height: 66vh; background: linear-gradient(135deg, var(--blush-light), var(--cream-dark)); }
+/* show the FULL product image (no zoom crop) so customers see the whole bottle */
+.product-gallery-main img { object-fit: contain; transform: none; }
 .product-gallery-thumb { overflow: hidden; }
 .product-gallery-thumb img { transform: scale(1.34); transform-origin: 50% 50%; }
 
@@ -759,8 +755,12 @@
 }
 
 /* ─── Product detail: mobile hardening (no horizontal overflow) ─── */
+/* breadcrumb never pushes the page wide — last item truncates */
+.product-crumbs { min-width: 0; flex-wrap: nowrap; }
+.product-crumbs > a, .product-crumbs > i { flex-shrink: 0; }
+.product-crumbs > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
 @media (max-width: 760px) {
-  .product-detail .container { overflow-x: clip; }
   .product-info-name { font-size: clamp(1.35rem, 5.5vw, 1.8rem); overflow-wrap: anywhere; word-break: break-word; }
   .product-info { padding: 0; }
   .product-gallery-main { max-height: 64vh; aspect-ratio: 1 / 1; }
