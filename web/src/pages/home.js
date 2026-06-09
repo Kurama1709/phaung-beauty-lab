@@ -124,25 +124,31 @@ export function renderHome() {
           <h2 class="section-title">Find Your Perfect Match</h2>
         </div>
         <div class="category-grid reveal-children">
-          <a href="#/shop?gender=Women" class="category-card" style="background:linear-gradient(135deg, #B76E79 0%, #D4A0A8 100%)">
-            <div class="category-card-icon">🌸</div>
-            <div class="category-card-overlay">
+          <a href="#/shop?gender=Women" class="category-card cat-her">
+            <div class="category-card-content">
+              <span class="category-card-icon"><i data-lucide="flower-2"></i></span>
+              <div class="category-card-eyebrow">Feminine</div>
               <div class="category-card-title">For Her</div>
               <div class="category-card-count">${womenCount} fragrances</div>
+              <span class="category-card-cta">Explore <i data-lucide="arrow-right" style="width:14px;height:14px"></i></span>
             </div>
           </a>
-          <a href="#/shop?gender=Men" class="category-card" style="background:linear-gradient(135deg, #2D1B2E 0%, #4A2F4C 100%)">
-            <div class="category-card-icon">🖤</div>
-            <div class="category-card-overlay">
+          <a href="#/shop?gender=Men" class="category-card cat-him">
+            <div class="category-card-content">
+              <span class="category-card-icon"><i data-lucide="crown"></i></span>
+              <div class="category-card-eyebrow">Masculine</div>
               <div class="category-card-title">For Him</div>
               <div class="category-card-count">${menCount} fragrances</div>
+              <span class="category-card-cta">Explore <i data-lucide="arrow-right" style="width:14px;height:14px"></i></span>
             </div>
           </a>
-          <a href="#/shop?gender=Unisex" class="category-card" style="background:linear-gradient(135deg, #D4A574 0%, #E8C9A4 100%)">
-            <div class="category-card-icon">✨</div>
-            <div class="category-card-overlay">
+          <a href="#/shop?gender=Unisex" class="category-card cat-uni">
+            <div class="category-card-content">
+              <span class="category-card-icon"><i data-lucide="sparkles"></i></span>
+              <div class="category-card-eyebrow">Everyone</div>
               <div class="category-card-title">Unisex</div>
               <div class="category-card-count">${unisexCount} fragrances</div>
+              <span class="category-card-cta">Explore <i data-lucide="arrow-right" style="width:14px;height:14px"></i></span>
             </div>
           </a>
         </div>
@@ -179,12 +185,21 @@ export function renderHome() {
           <h2 class="section-title">Shop by Brand</h2>
         </div>
         <div class="brands-grid reveal-children">
-          ${topBrands.map(b => `
+          ${topBrands.map(b => {
+            const logoSlug = b.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            const mono = b.name.split(/\s+/).map(w => w[0]).join('').slice(0, 3).toUpperCase();
+            return `
             <a href="#/shop?brand=${encodeURIComponent(b.name)}" class="brand-card">
+              <div class="brand-card-logo">
+                <img src="${import.meta.env.BASE_URL}brands/${logoSlug}.png" alt="${b.name}" loading="lazy"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                <span class="brand-monogram" style="display:none">${mono}</span>
+              </div>
               <div class="brand-card-name">${b.name}</div>
               <div class="brand-card-count">${b.count} items</div>
             </a>
-          `).join('')}
+            `;
+          }).join('')}
         </div>
       </div>
     </section>

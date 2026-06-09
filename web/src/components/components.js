@@ -360,57 +360,52 @@ export function renderFooter() {
   return `
     <footer class="footer">
       <div class="container">
-        <div class="footer-grid">
-          <div>
+        <div class="footer-main">
+          <div class="footer-brand">
             <div class="footer-brand-name">
-              <img src="${import.meta.env.BASE_URL}logo.jpg" alt="Phaung's Beauty Lab" class="brand-logo" style="width:42px;height:42px" />
+              <img src="${import.meta.env.BASE_URL}logo.jpg" alt="Phaung's Beauty Lab" class="brand-logo" style="width:44px;height:44px" />
               Phaung's Beauty Lab
             </div>
-            <p class="footer-brand-desc">
-              Discover genuine branded perfumes from around the world.
-              Serving thousands of regular customers across Myanmar since 2011.
-              We import and sell only authentic branded fragrances at fair prices.
-            </p>
-            <div class="flex gap-sm" style="margin-top:1rem">
+            <p class="footer-brand-desc">Genuine branded fragrances, curated with love — serving Myanmar since 2011.</p>
+            <div class="footer-contact">
               <a href="tel:0943065356" class="btn btn-sm btn-secondary">${icon('phone', 14)} Viber</a>
               <a href="mailto:yangonbranded@gmail.com" class="btn btn-sm btn-ghost">${icon('mail', 14)} Email</a>
             </div>
           </div>
-          <div>
-            <div class="footer-heading">Shop</div>
-            <div class="footer-links">
-              <a href="#/shop?gender=Men">Perfume for Men</a>
-              <a href="#/shop?gender=Women">Perfume for Women</a>
-              <a href="#/shop?type=Decant">Decants</a>
-              <a href="#/shop?type=Gift Set">Gift Sets</a>
-              <a href="#/shop?type=Tester">Tester Packages</a>
-            </div>
-          </div>
-          <div>
-            <div class="footer-heading">Top Brands</div>
-            <div class="footer-links">
-              <a href="#/shop?brand=Chanel">Chanel</a>
-              <a href="#/shop?brand=Versace">Versace</a>
-              <a href="#/shop?brand=Armani">Armani</a>
-              <a href="#/shop?brand=Gucci">Gucci</a>
-              <a href="#/shop?brand=Tom Ford">Tom Ford</a>
-              <a href="#/shop?brand=Creed">Creed</a>
-            </div>
-          </div>
-          <div>
-            <div class="footer-heading">Services</div>
-            <div class="footer-links">
-              <a href="#/about">Home Delivery</a>
-              <a href="#/about">Self Pick Up</a>
-              <a href="#/about">Preorder Service</a>
-              <a href="#/about">About Us</a>
-              <a href="#/admin">Admin Panel</a>
-            </div>
-          </div>
+
+          <nav class="footer-nav">
+            <details class="footer-col">
+              <summary class="footer-heading">Shop</summary>
+              <div class="footer-links">
+                <a href="#/shop?gender=Women">For Women</a>
+                <a href="#/shop?gender=Men">For Men</a>
+                <a href="#/shop?type=Decant">Decants</a>
+                <a href="#/shop?type=Gift Set">Gift Sets</a>
+              </div>
+            </details>
+            <details class="footer-col">
+              <summary class="footer-heading">Brands</summary>
+              <div class="footer-links">
+                <a href="#/shop?brand=Chanel">Chanel</a>
+                <a href="#/shop?brand=Versace">Versace</a>
+                <a href="#/shop?brand=Lattafa">Lattafa</a>
+                <a href="#/shop?brand=Gucci">Gucci</a>
+              </div>
+            </details>
+            <details class="footer-col">
+              <summary class="footer-heading">Help</summary>
+              <div class="footer-links">
+                <a href="#/about">About Us</a>
+                <a href="#/about">Delivery &amp; Pickup</a>
+                <a href="#/about">Preorder</a>
+                <a href="#/admin">Admin</a>
+              </div>
+            </details>
+          </nav>
         </div>
         <div class="footer-bottom">
-          <span>© ${new Date().getFullYear()} Phaung Perfume. All rights reserved.</span>
-          <span>In business since 2011 🇲🇲</span>
+          <span>© ${new Date().getFullYear()} Phaung's Beauty Lab</span>
+          <span>Crafted with love in Myanmar 🇲🇲</span>
         </div>
       </div>
     </footer>

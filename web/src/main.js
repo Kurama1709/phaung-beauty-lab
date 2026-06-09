@@ -15,10 +15,15 @@ async function init() {
   // SPA controls its own scroll — don't let the browser restore on reload
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
-  // Show loading spinner
+  // Show branded loading screen
   document.getElementById('app').innerHTML = `
-    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg)">
-      <div style="font-size:3rem;animation:float 2s ease-in-out infinite">🌸</div>
+    <div class="app-loader">
+      <div class="app-loader-logo">
+        <img src="${import.meta.env.BASE_URL}logo.jpg" alt="Phaung's Beauty Lab" />
+        <span class="app-loader-ring"></span>
+      </div>
+      <div class="app-loader-name">Phaung's Beauty Lab</div>
+      <div class="app-loader-sub">Beauty · Fragrance</div>
     </div>
   `;
 

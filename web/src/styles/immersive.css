@@ -628,6 +628,129 @@
   .admin-pagination { flex-direction: column; gap: 0.75rem; text-align: center; }
 }
 
+/* ─── Branded loading screen ──────────────────────────────── */
+.app-loader {
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.4rem;
+  background:
+    radial-gradient(700px 360px at 50% 38%, var(--blush-light), transparent 70%),
+    linear-gradient(160deg, var(--cream), var(--sage-soft));
+  animation: fadeIn 0.4s var(--ease) both;
+}
+.app-loader-logo { position: relative; width: 120px; height: 120px; animation: loaderPulse 1.8s var(--ease) infinite; }
+.app-loader-logo img {
+  width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+  box-shadow: 0 12px 34px rgba(47,61,44,0.22);
+}
+.app-loader-ring {
+  position: absolute; inset: -9px; border-radius: 50%;
+  border: 2px solid transparent; border-top-color: var(--gold); border-right-color: var(--gold-light);
+  animation: spin 1.1s linear infinite;
+}
+.app-loader-name {
+  margin-top: 1.25rem; font-family: var(--font-display); font-weight: 600;
+  font-size: 1.4rem; color: var(--forest);
+}
+.app-loader-sub {
+  font-family: var(--font-elegant); font-style: italic; letter-spacing: 0.18em;
+  text-transform: uppercase; font-size: 0.72rem; color: var(--gold-deep);
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes loaderPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+/* ─── Category cards (elegant iconic) ─────────────────────── */
+.category-card { aspect-ratio: 4/3; color: #fff; }
+.category-card.cat-her { background: linear-gradient(150deg, #C9849180 0%, var(--rose-dark) 100%), linear-gradient(135deg, #B76E79, #8B4F57); }
+.category-card.cat-him { background: linear-gradient(150deg, #4A2F4C 0%, #1f1320 100%); }
+.category-card.cat-uni { background: linear-gradient(150deg, var(--gold) 0%, var(--gold-deep) 100%); }
+.category-card .category-card-content {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 1.5rem; gap: 0.2rem;
+}
+.category-card .category-card-icon {
+  position: static; opacity: 1; font-size: inherit;
+  width: 54px; height: 54px; margin-bottom: 0.6rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.16);
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #fff;
+  transition: transform 0.5s var(--ease-bounce), background var(--duration) var(--ease);
+}
+.category-card .category-card-icon svg { width: 24px; height: 24px; }
+.category-card:hover .category-card-icon { transform: translateY(-4px) scale(1.08); background: rgba(255,255,255,0.28); }
+.category-card-eyebrow {
+  font-family: var(--font-elegant); font-style: italic; font-size: 0.8rem;
+  letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.8);
+}
+.category-card .category-card-title {
+  font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 600; color: #fff;
+}
+.category-card .category-card-count { color: rgba(255,255,255,0.82); font-size: 0.85rem; margin-top: 0.1rem; }
+.category-card-cta {
+  margin-top: 0.9rem;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
+  color: #fff;
+  padding: 0.4rem 1.1rem; border-radius: var(--radius-full);
+  border: 1px solid rgba(255,255,255,0.55);
+  opacity: 0; transform: translateY(6px);
+  transition: opacity var(--duration) var(--ease), transform var(--duration) var(--ease), background var(--duration) var(--ease);
+}
+.category-card:hover .category-card-cta { opacity: 1; transform: translateY(0); background: rgba(255,255,255,0.16); }
+
+/* ─── Brand monogram fallback + bigger logo ───────────────── */
+.brand-card-logo {
+  width: 100%; height: 56px; border-radius: var(--radius-sm);
+  border: none; padding: 0; margin-bottom: 0.6rem; background: transparent;
+}
+.brand-card-logo img { object-fit: contain; }
+.brand-monogram {
+  width: 100%; height: 100%; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 700; font-size: 1.5rem;
+  color: var(--rose); letter-spacing: 0.04em;
+}
+
+/* ─── Compact, collapsible footer ─────────────────────────── */
+.footer-main {
+  display: grid;
+  grid-template-columns: 1.6fr 2fr;
+  gap: 2.5rem;
+  margin-bottom: 2rem;
+  align-items: start;
+}
+.footer-brand-desc { font-size: 0.86rem; color: rgba(255,255,255,0.62); line-height: 1.7; margin: 0.6rem 0 1rem; max-width: 340px; }
+.footer-contact { display: flex; gap: 0.6rem; }
+.footer-nav { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.footer-col { min-width: 0; }
+.footer-col summary {
+  list-style: none; cursor: default;
+  font-family: var(--font-display); font-size: 0.85rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold-light);
+  margin-bottom: 0.75rem;
+}
+.footer-col summary::-webkit-details-marker { display: none; }
+.footer-col .footer-links { display: flex; flex-direction: column; gap: 0.55rem; }
+@media (min-width: 681px) {
+  /* always-open columns on desktop; disable the accordion toggle */
+  .footer-col .footer-links { display: flex !important; }
+  .footer-col summary { pointer-events: none; }
+}
+@media (max-width: 680px) {
+  .footer-main { grid-template-columns: 1fr; gap: 1.5rem; }
+  .footer-nav { grid-template-columns: 1fr; gap: 0; }
+  .footer-col { border-top: 1px solid rgba(255,255,255,0.1); }
+  .footer-col summary {
+    cursor: pointer; margin: 0; padding: 0.9rem 0;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-col summary::after { content: '+'; font-size: 1.2rem; color: var(--gold-light); }
+  .footer-col[open] summary::after { content: '–'; }
+  .footer-col .footer-links { padding: 0 0 1rem; }
+}
+
 /* ─── Mobile tuning ───────────────────────────────────────── */
 @media (max-width: 700px) {
   .hero-immersive { min-height: auto; padding-bottom: 2.5rem; gap: 0.25rem; }
