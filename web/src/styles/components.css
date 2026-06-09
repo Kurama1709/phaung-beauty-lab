@@ -21,6 +21,9 @@
   background: rgba(255, 248, 240, 0.95);
   box-shadow: var(--shadow-sm);
 }
+.navbar.nav-hidden {
+  transform: translateY(-100%);
+}
 .navbar-inner {
   display: flex;
   align-items: center;

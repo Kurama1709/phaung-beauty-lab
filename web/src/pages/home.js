@@ -10,6 +10,17 @@ function pickWithImages(pool, n) {
   return pool.filter(p => p.in_stock && (p.images || []).length > 0).slice(0, n);
 }
 
+// Concise name for the floating-bottle label (strip the brand prefix + filler).
+function bottleLabel(p) {
+  let n = p.name || 'Fragrance';
+  if (p.brand && n.toLowerCase().startsWith(p.brand.toLowerCase())) {
+    n = n.slice(p.brand.length).trim();
+  }
+  n = n.replace(/\b(Eau de Parfum|Eau de Toilette|EDP|EDT|Perfume|for (Men|Women|Unisex))\b/gi, '').replace(/\s{2,}/g, ' ').trim();
+  if (n.length > 30) n = n.slice(0, 30).replace(/\s+\S*$/, '') + '…';
+  return n || (p.name || 'Fragrance');
+}
+
 function petals(count = 9) {
   let html = '';
   for (let i = 0; i < count; i++) {
@@ -55,8 +66,12 @@ export function renderHome() {
       <div class="hero-3d">
         <div class="hero-stage" data-hero-stage>
           ${heroBottles.map((p, i) => `
-            <a href="#/product/${p.slug}" class="float-bottle ${bottleClass[i]}" data-depth="${bottleDepth[i]}" style="pointer-events:auto" title="${p.name}">
+            <a href="#/product/${p.slug}" class="float-bottle ${bottleClass[i]}" data-depth="${bottleDepth[i]}" style="pointer-events:auto">
               <img src="${store.getProductImage(p, 0, 500)}" alt="${p.name}" loading="eager" />
+              <span class="float-bottle-label">
+                ${p.brand ? `<span class="fbl-brand">${p.brand}</span>` : ''}
+                <span class="fbl-name">${bottleLabel(p)}</span>
+              </span>
             </a>
           `).join('')}
         </div>

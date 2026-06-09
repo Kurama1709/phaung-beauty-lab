@@ -124,11 +124,23 @@ export function renderNavbar() {
 }
 
 export function initNavbar() {
-  // Scroll effect
-  window.addEventListener('scroll', () => {
-    const navbar = document.getElementById('navbar');
-    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 10);
-  });
+  // Scroll effect + cozy hide-on-scroll (bind once globally)
+  if (!window.__navScrollBound) {
+    window.__navScrollBound = true;
+    let lastY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (!navbar) return;
+      const y = window.scrollY;
+      navbar.classList.toggle('scrolled', y > 10);
+      // Hide when scrolling down past the hero area, reveal on scroll up.
+      if (Math.abs(y - lastY) > 6) {
+        const goingDown = y > lastY;
+        navbar.classList.toggle('nav-hidden', goingDown && y > 140 && !document.querySelector('.cart-sidebar, .mobile-menu'));
+        lastY = y;
+      }
+    }, { passive: true });
+  }
 
   // Search
   const searchInput = document.getElementById('nav-search');

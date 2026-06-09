@@ -57,6 +57,27 @@ export function renderAbout() {
           </div>
         </div>
 
+        <!-- Founder / trust -->
+        <div class="founder reveal">
+          <div class="founder-portrait">
+            <img src="${import.meta.env.BASE_URL}founder.jpg" alt="Founder of Phaung's Beauty Lab"
+                 onerror="this.onerror=null;this.src='${import.meta.env.BASE_URL}logo.jpg';this.classList.add('is-fallback')" />
+            <span class="founder-ring"></span>
+          </div>
+          <div class="founder-text">
+            <div class="scene-divider" style="margin-left:0"><i data-lucide="heart" style="width:16px;height:16px"></i></div>
+            <div class="text-elegant" style="color:var(--gold-deep)">With love</div>
+            <h2 class="heading-lg" style="margin:0.25rem 0 0.75rem">Meet the Founder</h2>
+            <p class="text-muted" style="line-height:1.8">
+              Every fragrance at Phaung's Beauty Lab is hand-picked with care — chosen to make
+              you feel elegant, confident, and unmistakably yourself. What began as a love for
+              beautiful scents has grown into a trusted little boutique serving fragrance lovers
+              across Myanmar.
+            </p>
+            <div class="founder-sign">— Phaung</div>
+          </div>
+        </div>
+
         <!-- Contact -->
         <div class="about-contact reveal">
           <div class="scene-divider"><i data-lucide="flower-2" style="width:18px;height:18px"></i></div>
