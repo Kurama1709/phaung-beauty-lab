@@ -777,6 +777,100 @@
   .product-meta-grid { grid-template-columns: 1fr; }
 }
 
+/* ═══ MAXIMAL ANIMATIONS ═══════════════════════════════════ */
+
+/* Scroll progress line (top of viewport) */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 2000;
+  background: linear-gradient(90deg, var(--rose), var(--gold), var(--rose-light));
+  transform: scaleX(0); transform-origin: 0 50%;
+  box-shadow: 0 1px 8px rgba(183,110,121,0.45);
+  pointer-events: none;
+}
+
+/* Hero headline shimmer sweep */
+.hero-immersive .hero-title span,
+.hero-title span {
+  background: linear-gradient(110deg, var(--rose) 18%, var(--gold) 38%, #fff7ef 50%, var(--gold) 62%, var(--rose) 82%);
+  background-size: 220% auto;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  animation: heroShimmer 5.5s ease-in-out infinite;
+}
+@keyframes heroShimmer { 0%,100% { background-position: 0% center; } 50% { background-position: 100% center; } }
+
+/* Blur-in scroll reveal (more cinematic) */
+.reveal {
+  filter: blur(7px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease), filter 0.9s var(--ease);
+}
+.reveal.in-view { filter: blur(0); }
+
+/* Product card 3D tilt + Ken-Burns */
+.product-card { transform-style: preserve-3d; }
+.product-card.tilting {
+  transition: box-shadow 0.3s var(--ease);
+  box-shadow: var(--shadow-xl), 0 0 40px rgba(183,110,121,0.25);
+  z-index: 6;
+}
+.product-card:hover .product-card-image img { animation: kenBurns 7s ease-out forwards; }
+@keyframes kenBurns {
+  from { transform: scale(1.3); }
+  to   { transform: scale(1.46) translate(1.5%, -1.5%); }
+}
+.product-card:active { transform: scale(0.98); }
+
+/* Fly-to-cart */
+.fly-to-cart {
+  position: fixed; z-index: 3000; border-radius: 14px; object-fit: cover;
+  pointer-events: none; box-shadow: 0 12px 34px rgba(45,27,46,0.4);
+  transition: transform 0.72s cubic-bezier(0.45,0,0.25,1), opacity 0.72s ease;
+  will-change: transform, opacity;
+}
+
+/* Cart pop + badge bounce */
+.cart-pop { animation: cartPop 0.5s var(--ease-bounce); }
+@keyframes cartPop { 0%{transform:scale(1)} 40%{transform:scale(1.28)} 100%{transform:scale(1)} }
+.cart-count.badge-bounce { animation: badgeBounce 0.55s var(--ease-bounce); }
+@keyframes badgeBounce { 0%{transform:scale(0.3)} 55%{transform:scale(1.5)} 100%{transform:scale(1)} }
+
+/* Variant pill springy pop */
+.variant-pill.variant-pop { animation: variantPop 0.42s var(--ease-bounce); }
+@keyframes variantPop { 0%{transform:scale(1)} 40%{transform:scale(1.07)} 100%{transform:scale(1)} }
+
+/* Active gallery thumbnail glow */
+.product-gallery-thumb.active {
+  box-shadow: 0 0 0 2px var(--rose), 0 4px 16px rgba(183,110,121,0.45);
+  transform: translateY(-2px);
+}
+
+/* Mobile sticky buy bar */
+.sticky-buy {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 950;
+  display: none; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 0.7rem 1rem calc(0.7rem + env(safe-area-inset-bottom, 0px));
+  background: rgba(255,248,240,0.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -6px 24px rgba(45,27,46,0.14);
+  transform: translateY(120%); transition: transform 0.38s var(--ease);
+}
+.sticky-buy.show { transform: translateY(0); }
+.sticky-buy-name { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--rose); }
+.sticky-buy-price { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--plum); }
+.sticky-buy .btn { flex-shrink: 0; white-space: nowrap; }
+@media (min-width: 769px) { .sticky-buy { display: none !important; } }
+@media (max-width: 768px) {
+  .sticky-buy { display: flex; }
+  .sticky-buy.show ~ #back-to-top, body:has(.sticky-buy.show) .back-to-top { bottom: 5.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-title span { animation: none; }
+  .reveal { filter: none; }
+  .product-card:hover .product-card-image img { animation: none; }
+  .cart-pop, .badge-bounce, .variant-pop, .scroll-progress { animation: none; transition: none; }
+}
+
 /* ─── Mobile tuning ───────────────────────────────────────── */
 @media (max-width: 700px) {
   .hero-immersive { min-height: auto; padding-bottom: 2.5rem; gap: 0.25rem; }

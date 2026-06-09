@@ -4,7 +4,7 @@
 import { store } from '../store.js';
 import { router } from '../router.js';
 import { renderNavbar, initNavbar, renderProductCard, initProductCards, renderFooter, showToast, refreshIcons } from '../components/components.js';
-import { initImmersive } from '../immersive.js';
+import { initImmersive, flyToCart, countUp } from '../immersive.js';
 
 function icon(name, size = 18) {
   return `<i data-lucide="${name}" style="width:${size}px;height:${size}px"></i>`;
@@ -81,7 +81,7 @@ export function renderProduct(params) {
             ${product.brand ? `<div class="product-info-brand">${product.brand}</div>` : ''}
             <h1 class="product-info-name">${product.name}</h1>
             <div class="product-info-price">
-              <span class="currency">MMK</span> <span id="product-price">${store.formatPrice(defaultVariant.price)}</span>
+              <span class="currency">MMK</span> <span id="product-price" data-val="${store.parsePrice(defaultVariant.price)}">${store.formatPrice(defaultVariant.price)}</span>
             </div>
 
             <!-- Status -->
@@ -156,6 +156,16 @@ export function renderProduct(params) {
         ` : ''}
       </div>
     </div>
+
+    ${product.in_stock ? `
+      <div class="sticky-buy" id="sticky-buy">
+        <div class="sticky-buy-info">
+          <div class="sticky-buy-name">${product.brand || product.name}</div>
+          <div class="sticky-buy-price">MMK <span id="sticky-price" data-val="${store.parsePrice(defaultVariant.price)}">${store.formatPrice(defaultVariant.price)}</span></div>
+        </div>
+        <button class="btn btn-primary" id="sticky-add">${icon('shopping-bag', 16)} Add to Bag</button>
+      </div>
+    ` : ''}
 
     ${renderFooter()}
   `;
@@ -259,8 +269,9 @@ export function renderProduct(params) {
       selectedVariant = v;
       document.querySelectorAll('[data-variant]').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      const priceEl = document.getElementById('product-price');
-      if (priceEl) priceEl.textContent = store.formatPrice(v.price);
+      btn.classList.remove('variant-pop'); void btn.offsetWidth; btn.classList.add('variant-pop');
+      countUp(document.getElementById('product-price'), store.parsePrice(v.price));
+      countUp(document.getElementById('sticky-price'), store.parsePrice(v.price));
       const cur = document.getElementById('variant-current');
       if (cur) cur.textContent = `· ${v.label}`;
       const sz = document.getElementById('meta-size'); if (sz) sz.textContent = v.size || '—';
@@ -272,6 +283,7 @@ export function renderProduct(params) {
   const addBtn = document.getElementById('add-to-cart-btn');
   if (addBtn && product.in_stock) {
     addBtn.addEventListener('click', () => {
+      flyToCart(document.getElementById('gallery-main-img'));
       store.addToCart(product.slug, selectedVariant);
       showToast(`${product.name} (${selectedVariant.label}) added to bag 🛍️`);
       const countEl = document.querySelector('.cart-count');
@@ -280,6 +292,24 @@ export function renderProduct(params) {
         const cartBtn = document.getElementById('cart-toggle');
         if (cartBtn) cartBtn.insertAdjacentHTML('beforeend', `<span class="cart-count">${store.getCartCount()}</span>`);
       }
+    });
+  }
+
+  // ── Sticky buy bar (mobile): show when main button scrolls away ──
+  const stickyBar = document.getElementById('sticky-buy');
+  if (stickyBar && addBtn) {
+    const io = new IntersectionObserver(([entry]) => {
+      stickyBar.classList.toggle('show', !entry.isIntersecting);
+    }, { rootMargin: '-10px 0px 0px 0px' });
+    io.observe(addBtn);
+    document.getElementById('sticky-add')?.addEventListener('click', () => {
+      flyToCart(document.getElementById('gallery-main-img'));
+      store.addToCart(product.slug, selectedVariant);
+      showToast(`${product.name} (${selectedVariant.label}) added to bag 🛍️`);
+      const cartBtn = document.getElementById('cart-toggle');
+      const existing = document.querySelector('.cart-count');
+      if (existing) existing.textContent = store.getCartCount();
+      else if (cartBtn) cartBtn.insertAdjacentHTML('beforeend', `<span class="cart-count">${store.getCartCount()}</span>`);
     });
   }
 

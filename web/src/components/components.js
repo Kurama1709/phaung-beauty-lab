@@ -3,6 +3,7 @@
    ═══════════════════════════════════════════════════════════ */
 import { store } from '../store.js';
 import { router } from '../router.js';
+import { flyToCart } from '../immersive.js';
 
 // ─── ICONS (Lucide) ────────────────────────────────────────
 function icon(name, size = 18) {
@@ -334,6 +335,7 @@ export function initProductCards(container) {
     card.addEventListener('click', (e) => {
       if (e.target.closest('[data-add-cart]')) {
         e.stopPropagation();
+        flyToCart(card.querySelector('.product-card-image img'));
         store.addToCart(e.target.closest('[data-add-cart]').dataset.addCart);
         showToast('Added to bag! 🛍️');
         refreshCartCount();
