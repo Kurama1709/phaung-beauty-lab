@@ -1,0 +1,14 @@
+# Netlify build config — the Vite app lives in web/
+[build]
+  base = "web"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Hash-router SPA: always serve index.html (harmless safety net)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
